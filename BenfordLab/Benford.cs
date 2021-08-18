@@ -41,7 +41,19 @@ namespace BenfordLab
             //   - transform (select) the data so that you have a list of
             //     BenfordData objects
             //
-            var m = ??? ;
+            var m = data
+                .Select(dat => new
+                {
+                    Country = dat.Country,
+                    Digit = FirstDigit.getFirstDigit(dat.Population)
+                })
+                .GroupBy(grp => grp.Digit)
+                .Select(array => new BenfordData
+                {
+                    Digit = array.Key,
+                    Count = array.Count()
+                })
+                .OrderBy(order => order.Digit);
 
             return m.ToArray();
         }
